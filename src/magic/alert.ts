@@ -5,6 +5,14 @@ import { AlertMagicName } from "../names";
 let AlertConceptName = '';
 let AlertHandler: any = null;
 
+export function SetAlertConceptName(name: string){
+    AlertConceptName = name;
+}
+
+export function SetAlertHandler(handler: any){
+    AlertHandler = handler;
+}
+
 function TransformNotifyOptions(options: any){
     if (IsObject(options)){
         options['icon'] = (options['icon'] || (options['error'] ? 'error' : (options['type'] || options['code'] || 'success')));
