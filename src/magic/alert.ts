@@ -1,26 +1,14 @@
-import { GetGlobal, AddMagicHandler, CreateMagicHandlerCallback, CreateReadonlyProxy, IAlertConcept, IsObject } from "@benbraide/inlinejs";
+import { GetGlobal, AddMagicHandler, CreateMagicHandlerCallback, CreateReadonlyProxy, IAlertConcept } from "@benbraide/inlinejs";
 
-import { AlertMagicName } from "../names";
-
-let AlertConceptName = '';
-let AlertHandler: any = null;
-
-export function SetAlertConceptName(name: string){
-    AlertConceptName = name;
-}
-
-export function SetAlertHandler(handler: any){
-    AlertHandler = handler;
-}
+import { AlertConceptName, AlertMagicName } from "../names";
 
 function CreateAlertProxy(){
-    const getConcept = () => (AlertConceptName ? GetGlobal().GetConcept<IAlertConcept>(AlertConceptName) : null);
+    const getConcept = () => GetGlobal().GetConcept<IAlertConcept>(AlertConceptName);
     let methods = {
-        setConceptName: (name: string) => (AlertConceptName = name),
-        setHandler: (handler: any) => (AlertHandler = handler),
-        notify: (options: any) => (AlertHandler || getConcept())?.Notify(options),
-        confirm: (options: any) => (AlertHandler || getConcept())?.Confirm(options),
-        prompt: (options: any) => (AlertHandler || getConcept())?.Prompt(options),
+        getConcept: () => getConcept(),
+        notify: (options: any) => getConcept()?.Notify(options),
+        confirm: (options: any) => getConcept()?.Confirm(options),
+        prompt: (options: any) => getConcept()?.Prompt(options),
     };
     
     return CreateReadonlyProxy(methods);
