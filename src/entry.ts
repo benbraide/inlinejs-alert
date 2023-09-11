@@ -1,12 +1,6 @@
-import { GetGlobal, WaitForGlobal } from '@benbraide/inlinejs';
-import { AlertMagicHandlerCompact } from './magic/alert';
-
-import { AlertConceptName } from './names';
-import { AlertConcept } from './concept';
+import { WaitForGlobal } from '@benbraide/inlinejs';
+import { Initialize } from './initialize';
 
 export function InlineJSAlert(){
-    WaitForGlobal().then(() => {
-        GetGlobal().SetConcept(AlertConceptName, new AlertConcept);
-        AlertMagicHandlerCompact();
-    });
+    WaitForGlobal().then(() => Initialize());
 }
